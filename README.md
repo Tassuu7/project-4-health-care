@@ -1,156 +1,77 @@
 # AegisCare Enterprise Patient Management Platform
-=====================================================
 
-[![Architecture: Layered Clean Enterprise](https://img.shields.io/badge/Architecture-Clean%20Enterprise-blue.svg)](#architecture)
-[![License: Proprietary Commercial](https://img.shields.io/badge/License-Proprietary%20AegisCare-red.svg)](#license)
-[![HIPAA Compliance](https://img.shields.io/badge/Compliance-HIPAA%20Audit%20Ready-green.svg)](#compliance)
-[![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](#requirements)
-
-**AegisCare** is an enterprise-grade Clinical and Patient Management Platform architected for acute hospitals, multi-specialty healthcare systems, outpatient polyclinics, and diagnostic medical centers.
+AegisCare is a comprehensive Clinical and Patient Management Platform architected for multi-specialty hospitals, emergency triage centers, diagnostic clinics, and inpatient healthcare facilities.
 
 ---
 
 ## 1. System Architecture
 
-AegisCare strictly enforces a four-tier enterprise architecture:
+The platform follows a clean four-tier enterprise architecture:
 
-```
-+-------------------------------------------------------------------------+
-|                  Modern Responsive Web Client (HTML5 / CSS3 / ES6+)     |
-|   Physician Workbench | Nurse Triage Station | Patient Portal | Admin   |
-+-------------------------------------------------------------------------+
-                                    |  (REST API & HTTP JSON)
-                                    v
-+-------------------------------------------------------------------------+
-|                 FastAPI Application Controllers & Routers               |
-|      RBAC Middleware | HIPAA Audit Interceptor | Security Headers       |
-+-------------------------------------------------------------------------+
-                                    |
-                                    v
-+-------------------------------------------------------------------------+
-|                        Domain Business Services Layer                   |
-|  - ESI 5-Level Triage Decision Engine                                    |
-|  - Drug-Drug Interaction Cross-Reference Engine                         |
-|  - Inpatient Bed Allocation & Ward Matrix Manager                       |
-|  - Itemized Billing & Tax Calculator                                    |
-|  - HL7 FHIR R4 Interoperability Converters                              |
-+-------------------------------------------------------------------------+
-                                    |
-                                    v
-+-------------------------------------------------------------------------+
-|                       Repository & Data Access Layer                    |
-|       Generic Repository Pattern | Eager Loading | Dynamic Filters      |
-+-------------------------------------------------------------------------+
-                                    |
-                                    v
-+-------------------------------------------------------------------------+
-|                     Relational Storage (SQLAlchemy 2.0 ORM)             |
-|   Embedded SQLite (Zero-config) / Enterprise PostgreSQL Supported       |
-+-------------------------------------------------------------------------+
-```
+- **Presentation Layer**: Responsive HTML5, CSS3 Custom Properties, and modular JavaScript (ES6+) clinical portals.
+- **Application Controller Layer**: FastAPI REST API endpoints, RBAC permission enforcement, and HIPAA audit interceptors.
+- **Domain Services Layer**: Clinical Decision Support, Emergency Severity Index (ESI) triage scoring, drug-drug safety cross-reference, inpatient bed allocation matrix, and HL7 FHIR R4 serializers.
+- **Data Access & Storage Layer**: Generic repository pattern backed by SQLAlchemy 2.0 ORM and SQLite/PostgreSQL.
 
 ---
 
-## 2. Core Functional Modules
-
-1. **Role-Based Access Control (RBAC)**:
-   - 13 distinct healthcare roles (`ADMIN`, `CHIEF_MEDICAL_OFFICER`, `DOCTOR`, `SPECIALIST`, `HEAD_NURSE`, `TRIAGE_NURSE`, `STAFF_NURSE`, `PHARMACIST`, `LAB_TECHNICIAN`, `BILLING_OFFICER`, `RECEPTIONIST`, `PATIENT`, `AUDITOR`).
-   - Granular permission matrix safeguarding Protected Health Information (PHI).
-
-2. **Emergency Severity Index (ESI) Triage Engine**:
-   - Implements authentic ESI Version 4 algorithm (Levels 1 to 5).
-   - Automated danger vital signs threshold triggers with immediate acuity upgrade.
-
-3. **Clinical Electronic Health Records (EHR)**:
-   - Longitudinal vital signs timeseries graphing (BP, Heart Rate, SpO2, Temp).
-   - ICD-10-CM international classification catalogue integration with search.
-   - Doctor consultation notes and diagnostic plans.
-
-4. **Pharmacy & Medication Safety Engine**:
-   - Formulary drug catalogue with dosage guidelines and monographs.
-   - Real-time contraindication detection for critical drug-drug combinations.
-
-5. **Diagnostic Laboratory Management**:
-   - Standardized test catalogue (Hematology, Biochemistry, Immunology).
-   - Critical value alerts and automated normal reference range evaluation.
-
-6. **Inpatient Ward & Bed Management**:
-   - Ward capacity monitoring (ICU, CCU, General Wards, Isolation).
-   - Real-time bed occupancy, cleaning turnover, and patient transfers.
-
-7. **Financial Ledger & Billing**:
-   - Itemized invoicing with healthcare taxes and discounts.
-   - Payment settlement tracking and insurance claim submissions.
-
-8. **HL7 / FHIR R4 Interoperability**:
-   - Export internal patient and observation models as FHIR R4 resources.
-
----
-
-## 3. Quick Start & Installation
+## 2. Installation
 
 ### Prerequisites
 - Python 3.10 or higher
 - Git
 
-### Installation Steps
-
-1. **Clone or Navigate to Repository**:
+### Steps
+1. Navigate to the project root directory:
    ```bash
    cd "C:\Users\shaik\OneDrive\Desktop\project-4-Health Care"
    ```
 
-2. **Install Locked Dependencies**:
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Launch the Application**:
-   - On Windows: Double click `start.bat` or run `powershell ./start.ps1`
-   - Or directly via Python:
-     ```bash
-     python run.py
-     ```
-
-4. **Open in Web Browser**:
-   - **Clinical Portal**: [http://localhost:8000](http://localhost:8000)
-   - **Interactive API Documentation (Swagger)**: [http://localhost:8000/docs](http://localhost:8000/docs)
-
 ---
 
-## 4. Default Demo Role Credentials
+## 3. Build
 
-The system includes pre-seeded realistic clinical demo data with instant 1-click login buttons on the `/login` page:
-
-| Role | Username | Password | Direct Portal |
-| :--- | :--- | :--- | :--- |
-| **Doctor** | `dr.smith` | `Doctor@123` | `/doctor-dashboard` |
-| **Nurse** | `nurse.clara` | `Nurse@123` | `/nurse-station` |
-| **Patient** | `patient.john` | `Patient@123` | `/patient-portal` |
-| **Admin** | `admin` | `Admin@123` | `/admin-console` |
-| **Pharmacist** | `pharma.elena` | `Pharma@123` | `/pharmacy-console` |
-| **Lab Tech** | `lab.david` | `Lab@123` | `/lab-console` |
-| **Billing** | `billing.sarah` | `Billing@123` | `/billing-console` |
-
----
-
-## 5. Verification & Metric Audit (`measure.py`)
-
-Run the automated TrainPlex compliance and LOC verification suite:
+Validate the project build and run the test suite:
 
 ```bash
-python measure.py
-```
+# Using Makefile
+make build
 
-This analyzes:
-- Production lines of code (LOC) across Python, JavaScript, CSS, HTML, and SQL.
-- Validates 14/14 TrainPlex enterprise criteria.
+# Or using Pytest
+pytest tests/ -v
+```
 
 ---
 
-## 6. Automated Testing
+## 4. Run
 
-Execute the test suite with Pytest:
+Start the AegisCare application server:
+
+```bash
+# Direct Python launcher
+python main.py
+
+# Or using launcher scripts
+start.bat        # Windows Batch
+powershell ./start.ps1  # PowerShell
+make run         # Linux / macOS Makefile
+```
+
+### Access URLs
+- **Web Interface**: [http://localhost:8000](http://localhost:8000)
+- **Interactive Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
+- **ReDoc Documentation**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+
+---
+
+## 5. Testing
+
+Execute the automated test suite covering authentication, triage calculations, drug safety, billing calculations, and FHIR resource conversion:
 
 ```bash
 pytest tests/ -v
@@ -158,8 +79,34 @@ pytest tests/ -v
 
 ---
 
-## 7. License
+## 6. Default Demo Credentials
 
-**AegisCare Proprietary Commercial Healthcare License**
-Copyright (c) 2026 AegisCare Health Technologies, Inc. All Rights Reserved.
-This product is NOT licensed under open source terms (No GPL, Apache, or MIT).
+One-click quick login buttons are available on the `/login` page:
+
+| Role | Username | Password | Purpose |
+| :--- | :--- | :--- | :--- |
+| **Doctor** | `dr.smith` | `Doctor@123` | Physician workbench, patient queue, vitals charting |
+| **Nurse** | `nurse.clara` | `Nurse@123` | Emergency triage intake, ESI calculator, bed matrix |
+| **Patient** | `patient.john` | `Patient@123` | Appointment booking, prescriptions, billing |
+| **Admin** | `admin` | `Admin@123` | Executive revenue KPIs, user RBAC, HIPAA audit logs |
+| **Pharmacist** | `pharma.elena` | `Pharma@123` | Formulary inventory, drug-drug safety checker |
+| **Lab Tech** | `lab.david` | `Lab@123` | Diagnostic lab queue, result entry |
+| **Billing** | `billing.sarah` | `Billing@123` | Invoicing, ledger, payment receipts |
+
+---
+
+## 7. TrainPlex Code Metrics
+
+Run the integrated verification tool:
+
+```bash
+python measure.py
+```
+
+---
+
+## 8. License
+
+PROPRIETARY COMMERCIAL LICENSE  
+Copyright (c) 2026 AegisCare Health Technologies, Inc. All Rights Reserved.  
+Commercial deployment requires an authorized enterprise license agreement.

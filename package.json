@@ -1,0 +1,17 @@
+{
+  "name": "aegiscare-enterprise-platform",
+  "version": "4.2.0",
+  "description": "Enterprise Clinical and Patient Management Platform",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "python main.py",
+    "serve": "python run.py",
+    "build": "python -m pytest tests/",
+    "test": "pytest tests/ -v",
+    "lint": "python -m measure"
+  },
+  "dependencies": {
+    "lucide-static": "^0.395.0"
+  }
+}

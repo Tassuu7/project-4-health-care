@@ -1,0 +1,16 @@
+{
+  "app_name": "AegisCare Enterprise Patient Management Platform",
+  "environment": "development",
+  "debug": true,
+  "server": {
+    "host": "0.0.0.0",
+    "port": 8000
+  },
+  "database": {
+    "url": "sqlite:///./aegiscare_health.db"
+  },
+  "security": {
+    "jwt_algorithm": "HS256",
+    "session_timeout_minutes": 30
+  }
+}
