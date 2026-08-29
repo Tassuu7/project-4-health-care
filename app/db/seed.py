@@ -76,14 +76,14 @@ def seed_database():
 
         for ward in wards:
             for r_idx in range(1, 4):
-                room = Room(ward_id=ward.id, room_number=f"{ward.name[:3].upper()}-{ward.floor_number}0{r_idx}")
+                room = Room(ward_id=ward.id, room_number=f"W{ward.id}-F{ward.floor_number}-R{r_idx}")
                 db.add(room)
                 db.commit()
                 for b_idx in range(1, 4):
                     status = BedStatus.AVAILABLE if (r_idx + b_idx) % 3 != 0 else BedStatus.OCCUPIED
                     bed = Bed(
                         room_id=room.id,
-                        bed_identifier=f"BED-{room.room_number}-{b_idx}",
+                        bed_identifier=f"BED-W{ward.id}-R{r_idx}-B{b_idx}",
                         status=status,
                         is_ventilator_equipped=(ward.ward_type == WardType.ICU_INTENSIVE_CARE)
                     )

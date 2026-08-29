@@ -7,8 +7,22 @@ document.addEventListener("DOMContentLoaded", () => {
   if (loginForm) {
     loginForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const username_or_email = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
+      const submitBtn = loginForm.querySelector("button[type='submit']");
+      const originalText = submitBtn.innerHTML;
+      
+      const usernameInput = document.getElementById("username");
+      const passwordInput = document.getElementById("password");
+      
+      const username_or_email = usernameInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!username_or_email || !password) {
+        AegisCare.showToast("Please enter both username and password", "warning");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = "Signing in...";
 
       try {
         const res = await AegisCare.request("/auth/login", {
@@ -18,27 +32,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
         AegisCare.setToken(res.data.access_token);
         AegisCare.setCurrentUser(res.data.user);
-        AegisCare.showToast("Login successful!", "success");
+        AegisCare.showToast(`Welcome, ${res.data.user.first_name}! Redirecting...`, "success");
 
-        // Redirect based on role
+        // Redirect based on user role
         const role = res.data.user.role;
-        if (role === "DOCTOR" || role === "SPECIALIST") {
-          window.location.href = "/doctor-dashboard";
-        } else if (role === "TRIAGE_NURSE" || role === "STAFF_NURSE" || role === "HEAD_NURSE") {
-          window.location.href = "/nurse-station";
-        } else if (role === "ADMIN") {
-          window.location.href = "/admin-console";
-        } else if (role === "PHARMACIST") {
-          window.location.href = "/pharmacy-console";
-        } else if (role === "LAB_TECHNICIAN") {
-          window.location.href = "/lab-console";
-        } else if (role === "BILLING_OFFICER") {
-          window.location.href = "/billing-console";
-        } else {
-          window.location.href = "/patient-portal";
-        }
+        setTimeout(() => {
+          if (role === "DOCTOR" || role === "SPECIALIST") {
+            window.location.href = "/doctor-dashboard";
+          } else if (role === "TRIAGE_NURSE" || role === "STAFF_NURSE" || role === "HEAD_NURSE") {
+            window.location.href = "/nurse-station";
+          } else if (role === "ADMIN") {
+            window.location.href = "/admin-console";
+          } else if (role === "PHARMACIST") {
+            window.location.href = "/pharmacy-console";
+          } else if (role === "LAB_TECHNICIAN") {
+            window.location.href = "/lab-console";
+          } else if (role === "BILLING_OFFICER") {
+            window.location.href = "/billing-console";
+          } else {
+            window.location.href = "/patient-portal";
+          }
+        }, 500);
       } catch (err) {
         console.error("Login failed:", err);
+        AegisCare.showToast(err.message || "Invalid credentials", "error");
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
       }
     });
   }
@@ -46,7 +65,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Quick demo login helper
 function quickLogin(username, password) {
-  document.getElementById("username").value = username;
-  document.getElementById("password").value = password;
-  document.getElementById("loginForm").dispatchEvent(new Event("submit"));
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+  if (usernameInput && passwordInput) {
+    usernameInput.value = username;
+    passwordInput.value = password;
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+      loginForm.dispatchEvent(new Event("submit"));
+    }
+  }
 }
