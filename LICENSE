@@ -1,0 +1,39 @@
+AEGISCARE HEALTH SYSTEMS - PROPRIETARY COMMERCIAL SOFTWARE LICENSE
+==================================================================
+Copyright (c) 2026 AegisCare Health Technologies, Inc.
+All Rights Reserved.
+
+NOTICE TO USER:
+This software product, including its source code, documentation, data models,
+algorithms, user interface designs, and supporting materials ("Software"),
+is the proprietary property of AegisCare Health Technologies, Inc. and is
+protected by national and international copyright, trademark, trade secret,
+and other intellectual property laws.
+
+1. PROPRIETARY RIGHTS & RESTRICTIONS:
+   - This Software is NOT licensed under any open-source license (such as GPL,
+     Apache, MIT, BSD, or MPL).
+   - Unauthorized copying, reverse engineering, decompiling, disassembling,
+     redistribution, sublicense, modification, or commercial exploitation of
+     this Software or any portion thereof is strictly prohibited.
+   - Any deployment, execution, or utilization of this Software requires an
+     active, authenticated commercial license agreement directly executed
+     with AegisCare Health Technologies, Inc.
+
+2. CONFIDENTIALITY & HIPAA COMPLIANCE:
+   - The clinical workflows, decision support heuristics, triage scoring
+     matrices, and security architectures contained herein constitute confidential
+     trade secrets of AegisCare Health Technologies, Inc.
+   - All deployments must adhere to applicable healthcare privacy standards,
+     including HIPAA, HITECH, and GDPR health data security mandates.
+
+3. DISCLAIMER OF WARRANTY:
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL
+   THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR
+   OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE.
+
+FOR LICENSING INQUIRIES, ENTERPRISE INTEGRATION, OR SUPPORT:
+Contact: enterprise-licensing@aegiscarehealth.com
+AegisCare Health Technologies, Inc.
