@@ -17,6 +17,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Configure Git Safe Directory
+        run: |
+          git config --global --add safe.directory '*'
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:

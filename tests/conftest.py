@@ -6,7 +6,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
-from starlette.testclient import TestClient
+from fastapi.testclient import TestClient
 from app.core.constants import UserRole
 from app.core.security import hash_password
 import app.models
