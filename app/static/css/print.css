@@ -1,0 +1,31 @@
+/*
+ * AegisCare Enterprise - Print Stylesheet for Formal Clinical Documents
+ */
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt;
+  }
+
+  .app-sidebar, .app-header, .btn, .modal-overlay, #toast-container {
+    display: none !important;
+  }
+
+  .app-main {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .print-document-header {
+    border-bottom: 2px solid #000000;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    border: none !important;
+    box-shadow: none !important;
+  }
+}

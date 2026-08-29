@@ -1,0 +1,67 @@
+/*
+ * AegisCare Enterprise - Multi-Role Clinical Portals Stylesheet
+ */
+
+/* Triage Scoring Workbench */
+.triage-calculator-card {
+  background: #ffffff;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.triage-score-display {
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  color: #ffffff;
+  margin-top: 16px;
+}
+
+.triage-score-display.esi-1 { background: #dc2626; }
+.triage-score-display.esi-2 { background: #ea580c; }
+.triage-score-display.esi-3 { background: #eab308; color: #1c1917; }
+.triage-score-display.esi-4 { background: #16a34a; }
+.triage-score-display.esi-5 { background: #2563eb; }
+
+/* Prescription Writer Table */
+.rx-item-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 40px;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Patient Portal Timeline */
+.patient-timeline {
+  position: relative;
+  padding-left: 28px;
+}
+
+.patient-timeline::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-medium);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.timeline-bullet {
+  position: absolute;
+  left: -28px;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--primary-600);
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--primary-600);
+}

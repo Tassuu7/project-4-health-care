@@ -1,0 +1,87 @@
+/*
+ * AegisCare Enterprise - Dashboard, Metrics Grid, and Clinical View Styles
+ */
+
+/* Executive Metric Cards */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.metric-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+}
+
+.metric-info h3 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.metric-info .metric-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.metric-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.metric-icon.blue { background: #eff6ff; color: #2563eb; }
+.metric-icon.green { background: #f0fdf4; color: #16a34a; }
+.metric-icon.amber { background: #fffbeb; color: #d97706; }
+.metric-icon.red { background: #fef2f2; color: #dc2626; }
+
+/* Inpatient Ward Bed Grid */
+.bed-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+}
+
+.bed-card {
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.bed-card:hover {
+  transform: translateY(-2px);
+}
+
+.bed-card.available {
+  border-color: var(--health-green);
+  background-color: #f0fdf4;
+}
+
+.bed-card.occupied {
+  border-color: var(--health-red);
+  background-color: #fef2f2;
+}
+
+.bed-card.cleaning {
+  border-color: var(--health-amber);
+  background-color: #fffbeb;
+}

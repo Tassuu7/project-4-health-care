@@ -1,0 +1,46 @@
+/*
+ * AegisCare Enterprise - SVG & Canvas Vitals Trend Charts Styles
+ */
+
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 280px;
+}
+
+.svg-chart {
+  width: 100%;
+  height: 100%;
+}
+
+.vitals-trend-line {
+  fill: none;
+  stroke: var(--primary-600);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.vitals-pulse-line {
+  fill: none;
+  stroke: var(--health-red);
+  stroke-width: 2.5;
+}
+
+.vitals-spo2-line {
+  fill: none;
+  stroke: var(--health-teal);
+  stroke-width: 2.5;
+}
+
+.chart-grid-line {
+  stroke: #e2e8f0;
+  stroke-width: 1;
+  stroke-dasharray: 4, 4;
+}
+
+.chart-axis-text {
+  font-size: 11px;
+  fill: #64748b;
+  font-family: var(--font-family);
+}
