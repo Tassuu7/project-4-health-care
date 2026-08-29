@@ -30,7 +30,7 @@ def seed_database():
     db: Session = SessionLocal()
     try:
         # 1. Check if database is already seeded
-        if db.query(User).count() > 0:
+        if db.query(Department).count() > 0 or db.query(User).count() > 0:
             print("[*] Database already contains records. Skipping seed.")
             return
 
