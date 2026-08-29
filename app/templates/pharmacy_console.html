@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Pharmacy & Medication Inventory - AegisCare{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-center">
+  <div>
+    <h1 style="font-size: 24px; font-weight: 700;">Pharmacy Dispensing & Inventory Management</h1>
+    <p class="text-muted">E-Prescription fulfillment, formulary stock balances, and drug-drug safety alerts.</p>
+  </div>
+  <button class="btn btn-primary" onclick="AegisCare.showToast('Inventory report downloaded', 'success')">Export Formulary CSV</button>
+</div>
+
+<div class="card mb-6">
+  <div class="card-header">
+    <h2 class="card-title">Hospital Formulary Drug Inventory</h2>
+    <span class="badge badge-success">Active Formulary</span>
+  </div>
+  <div class="table-container">
+    <table class="table" id="medicationInventoryTable">
+      <thead>
+        <tr>
+          <th>Drug Code</th>
+          <th>Brand & Generic Name</th>
+          <th>Form & Strength</th>
+          <th>Stock Balance</th>
+          <th>Unit Price</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="6" class="text-center text-muted">Loading formulary inventory...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="/static/js/pharmacy_portal.js"></script>
+<script>
+  function openRestockModal(id) {
+    AegisCare.showToast(`Restock order submitted for medication #${id}`, "success");
+  }
+</script>
+{% endblock %}

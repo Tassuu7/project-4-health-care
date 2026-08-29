@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Billing & Invoicing - AegisCare{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-center">
+  <div>
+    <h1 style="font-size: 24px; font-weight: 700;">Hospital Invoicing & Revenue Management</h1>
+    <p class="text-muted">Generate itemized patient bills, process copayments, and submit insurance claims.</p>
+  </div>
+  <button class="btn btn-primary" onclick="openModal('newInvoiceModal')">+ Create Patient Invoice</button>
+</div>
+
+<div class="card mb-6">
+  <div class="card-header">
+    <h2 class="card-title">Recent Invoices & Payments Ledger</h2>
+    <span class="badge badge-primary">Ledger</span>
+  </div>
+  <div class="table-container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Invoice #</th>
+          <th>Patient</th>
+          <th>Issue Date</th>
+          <th>Total Amount</th>
+          <th>Paid Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>INV-2026-0001</strong></td>
+          <td>John Doe (MRN-2026-0001)</td>
+          <td>2026-08-25</td>
+          <td>$245.00</td>
+          <td>$245.00</td>
+          <td><span class="badge badge-success">PAID</span></td>
+        </tr>
+        <tr>
+          <td><strong>INV-2026-0002</strong></td>
+          <td>Jane Smith (MRN-2026-0002)</td>
+          <td>2026-08-28</td>
+          <td>$480.00</td>
+          <td>$100.00</td>
+          <td><span class="badge badge-warning">PARTIALLY PAID</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

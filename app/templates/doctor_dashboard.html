@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Physician Workbench - AegisCare{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-center">
+  <div>
+    <h1 style="font-size: 24px; font-weight: 700;">Physician Clinical Workbench</h1>
+    <p class="text-muted">Today's consultation queue, physiological vitals tracking, and e-prescriptions.</p>
+  </div>
+  <button class="btn btn-primary" onclick="openModal('newPrescriptionModal')">+ Write E-Prescription</button>
+</div>
+
+<!-- Patient Queue Table -->
+<div class="card mb-6">
+  <div class="card-header">
+    <h2 class="card-title">Today's Patient Queue</h2>
+    <span class="badge badge-primary">Active Encounters</span>
+  </div>
+  <div class="table-container">
+    <table class="table" id="doctorQueueTable">
+      <thead>
+        <tr>
+          <th>Appt Number</th>
+          <th>Patient</th>
+          <th>Time</th>
+          <th>Chief Complaint</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="6" class="text-center text-muted">Loading appointments...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Physiological Vitals Trend Visualizer -->
+<div class="card mb-6">
+  <div class="card-header">
+    <h2 class="card-title">Patient Vital Signs Timeseries (BP & Pulse)</h2>
+    <span class="badge badge-success">Telemetry Stream</span>
+  </div>
+  <div class="card-body">
+    <div id="doctorVitalsChart" class="chart-wrapper"></div>
+  </div>
+</div>
+
+<!-- Consultation Modal Dialog -->
+<div class="modal-overlay" id="consultationModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="card-title">Clinical Consultation Encounter</h3>
+      <button class="btn btn-sm btn-secondary" onclick="closeModal('consultationModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="consultApptId">
+      <input type="hidden" id="consultPatientId">
+      
+      <div class="form-group">
+        <label class="form-label">Subjective (Patient Complaint & History)</label>
+        <textarea class="form-control" rows="2" placeholder="Patient reports intermittent retrosternal chest tightness..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Objective (Physical Examination & Vitals)</label>
+        <textarea class="form-control" rows="2" placeholder="Regular rhythm, S1/S2 present, no murmurs..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Primary Diagnosis (ICD-10 Code)</label>
+        <input type="text" class="form-control" placeholder="e.g. I10.0 (Essential Hypertension)">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Therapeutic Plan & Follow-up</label>
+        <textarea class="form-control" rows="2" placeholder="Initiate Amlodipine 5mg QD, low-sodium diet, review in 4 weeks."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('consultationModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveConsultation()">Save Clinical Record</button>
+    </div>
+  </div>
+</div>
+
+<!-- E-Prescription Modal Dialog -->
+<div class="modal-overlay" id="newPrescriptionModal">
+  <div class="modal-content" style="max-width: 700px;">
+    <div class="modal-header">
+      <h3 class="card-title">Issue Electronic Prescription (E-Prescription)</h3>
+      <button class="btn btn-sm btn-secondary" onclick="closeModal('newPrescriptionModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Select Patient</label>
+        <select class="form-select" id="rxPatientSelect">
+          <option value="1">John Doe (MRN-2026-0001)</option>
+          <option value="2">Jane Smith (MRN-2026-0002)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Prescription Diagnosis</label>
+        <input type="text" class="form-control" id="rxDiagnosis" placeholder="e.g. Community-Acquired Pneumonia">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Medication & Dosage</label>
+        <div class="rx-item-row">
+          <select class="form-select" id="rxMedSelect">
+            <option value="1">Amoxicillin 500mg (Tablet)</option>
+            <option value="2">Azithromycin 250mg (Tablet)</option>
+            <option value="3">Lisinopril 10mg (Tablet)</option>
+            <option value="4">Atorvastatin 20mg (Tablet)</option>
+          </select>
+          <input type="text" class="form-control" placeholder="1 tab TID" id="rxDose">
+          <input type="number" class="form-control" placeholder="7 days" value="7" id="rxDays">
+          <input type="number" class="form-control" placeholder="Qty 21" value="21" id="rxQty">
+        </div>
+      </div>
+      <div id="drugSafetyAlertBox" class="hidden p-3 mb-2" style="background:#fee2e2; border-left:4px solid #dc2626; border-radius:4px;">
+        <strong class="text-danger">Drug Interaction Warning:</strong>
+        <span id="drugSafetyText"></span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('newPrescriptionModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitPrescription()">Authorize & Issue</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="/static/js/vitals_chart.js"></script>
+<script src="/static/js/doctor_portal.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Sample vital timeseries
+    const sampleVitals = [
+      { systolic_bp: 120, heart_rate: 72 },
+      { systolic_bp: 128, heart_rate: 78 },
+      { systolic_bp: 135, heart_rate: 82 },
+      { systolic_bp: 124, heart_rate: 75 },
+      { systolic_bp: 118, heart_rate: 70 }
+    ];
+    renderVitalsChart("doctorVitalsChart", sampleVitals);
+  });
+
+  function saveConsultation() {
+    AegisCare.showToast("Consultation recorded and saved to EHR!", "success");
+    closeModal("consultationModal");
+  }
+
+  function submitPrescription() {
+    AegisCare.showToast("Prescription issued and sent to Pharmacy!", "success");
+    closeModal("newPrescriptionModal");
+  }
+</script>
+{% endblock %}

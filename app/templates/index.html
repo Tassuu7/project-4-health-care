@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Overview - AegisCare Enterprise Healthcare{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-center">
+  <div>
+    <h1 style="font-size: 24px; font-weight: 700;">Hospital Clinical Overview</h1>
+    <p class="text-muted">Real-time clinical telemetry, triage acuity distribution, and operational metrics.</p>
+  </div>
+  <div class="flex gap-2">
+    <a href="/login" class="btn btn-secondary">Role Switcher</a>
+    <a href="/nurse-station" class="btn btn-primary">+ New Emergency Triage</a>
+  </div>
+</div>
+
+<!-- Executive Metric Cards Grid -->
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="metric-info">
+      <h3>Active Patients</h3>
+      <div class="metric-value">{{ kpis.total_active_patients }}</div>
+      <span class="text-success" style="font-size:12px;">+12% this month</span>
+    </div>
+    <div class="metric-icon blue">&#128101;</div>
+  </div>
+  
+  <div class="metric-card">
+    <div class="metric-info">
+      <h3>Today's Visits</h3>
+      <div class="metric-value">{{ kpis.today_appointments }}</div>
+      <span class="text-muted" style="font-size:12px;">Outpatient clinic</span>
+    </div>
+    <div class="metric-icon green">&#128197;</div>
+  </div>
+  
+  <div class="metric-card">
+    <div class="metric-info">
+      <h3>Bed Occupancy</h3>
+      <div class="metric-value">{{ kpis.bed_occupancy_rate_percent }}%</div>
+      <span class="text-warning" style="font-size:12px;">{{ kpis.occupied_beds_count }} occupied</span>
+    </div>
+    <div class="metric-icon amber">&#128719;</div>
+  </div>
+  
+  <div class="metric-card">
+    <div class="metric-info">
+      <h3>Pending Labs</h3>
+      <div class="metric-value">{{ kpis.pending_lab_orders }}</div>
+      <span class="text-danger" style="font-size:12px;">Awaiting analysis</span>
+    </div>
+    <div class="metric-icon red">&#129514;</div>
+  </div>
+</div>
+
+<!-- Hospital Portals Direct Access -->
+<div class="card mb-6">
+  <div class="card-header">
+    <h2 class="card-title">Hospital Department Portals</h2>
+    <span class="badge badge-primary">Interactive Modules</span>
+  </div>
+  <div class="card-body">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+      <a href="/doctor-dashboard" class="card p-4" style="text-decoration:none; color:inherit; border-left: 4px solid var(--primary-600);">
+        <h3 style="font-size:16px; font-weight:600;">Physician Clinical Workbench</h3>
+        <p class="text-muted mt-1">Review active patient queue, chart vitals, write electronic prescriptions, and document ICD-10 notes.</p>
+        <span class="btn btn-sm btn-primary mt-2">Open Workbench &rarr;</span>
+      </a>
+
+      <a href="/nurse-station" class="card p-4" style="text-decoration:none; color:inherit; border-left: 4px solid var(--health-orange);">
+        <h3 style="font-size:16px; font-weight:600;">Nurse Triage & Inpatient Station</h3>
+        <p class="text-muted mt-1">5-Level ESI acuity scoring calculator, vital signs recorder, and inpatient bed occupancy matrix.</p>
+        <span class="btn btn-sm btn-primary mt-2">Open Station &rarr;</span>
+      </a>
+
+      <a href="/patient-portal" class="card p-4" style="text-decoration:none; color:inherit; border-left: 4px solid var(--health-green);">
+        <h3 style="font-size:16px; font-weight:600;">Patient Self-Service Portal</h3>
+        <p class="text-muted mt-1">Schedule consultations, view medical prescriptions, access verified lab test results, and pay invoices.</p>
+        <span class="btn btn-sm btn-primary mt-2">Open Portal &rarr;</span>
+      </a>
+
+      <a href="/admin-console" class="card p-4" style="text-decoration:none; color:inherit; border-left: 4px solid var(--health-purple);">
+        <h3 style="font-size:16px; font-weight:600;">Administration & HIPAA Audit</h3>
+        <p class="text-muted mt-1">Executive financial revenue analytics, staff RBAC permissions, and immutable security audit logs.</p>
+        <span class="btn btn-sm btn-primary mt-2">Open Console &rarr;</span>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
