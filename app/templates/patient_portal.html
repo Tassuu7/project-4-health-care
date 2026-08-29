@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Portal - AegisCare{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-center">
+  <div>
+    <h1 style="font-size: 24px; font-weight: 700;">Patient Self-Service Health Portal</h1>
+    <p class="text-muted">Manage your upcoming appointments, view active prescriptions, and pay bills.</p>
+  </div>
+  <button class="btn btn-primary" onclick="openModal('bookApptModal')">+ Schedule New Visit</button>
+</div>
+
+<!-- Patient Appointments & Medical History -->
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+  <div>
+    <div class="card mb-6">
+      <div class="card-header">
+        <h2 class="card-title">My Upcoming Consultations</h2>
+      </div>
+      <div class="card-body">
+        <div id="patientAppointmentsList" class="patient-timeline">
+          <!-- Populated by patient_portal.js -->
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">My Active Prescriptions</h2>
+      </div>
+      <div class="table-container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Rx #</th>
+              <th>Medication</th>
+              <th>Dosage</th>
+              <th>Expires</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>RX-1001-9281</strong></td>
+              <td>Amoxicillin 500mg</td>
+              <td>1 tablet TID with food (7 days)</td>
+              <td>2026-09-15</td>
+              <td><span class="badge badge-success">Active</span></td>
+            </tr>
+            <tr>
+              <td><strong>RX-1001-8392</strong></td>
+              <td>Lisinopril 10mg</td>
+              <td>1 tablet PO QD in morning</td>
+              <td>2026-12-31</td>
+              <td><span class="badge badge-success">Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="card mb-6">
+      <div class="card-header">
+        <h2 class="card-title">Outstanding Invoices</h2>
+      </div>
+      <div class="card-body">
+        <div class="p-4 mb-4" style="background:#f8fafc; border-radius:var(--radius-md); border:1px solid var(--border-light);">
+          <div class="flex justify-between items-center mb-2">
+            <span style="font-weight:600;">INV-2026-0042</span>
+            <span class="badge badge-danger">Unpaid</span>
+          </div>
+          <p class="text-muted" style="font-size:12px;">Cardiology Specialist Visit & ECG</p>
+          <div class="flex justify-between items-center mt-4">
+            <span style="font-size:20px; font-weight:700;">$185.00</span>
+            <button class="btn btn-sm btn-success" onclick="payBillModal('INV-2026-0042', 185.00)">Pay Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Booking Wizard Modal -->
+<div class="modal-overlay" id="bookApptModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="card-title">Book Doctor Consultation</h3>
+      <button class="btn btn-sm btn-secondary" onclick="closeModal('bookApptModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Clinical Specialty / Department</label>
+        <select class="form-select">
+          <option>Cardiology (Heart & Circulation)</option>
+          <option>General Internal Medicine</option>
+          <option>Orthopedics & Joint Care</option>
+          <option>Pediatrics</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Preferred Physician</label>
+        <select class="form-select">
+          <option>Dr. Marcus Vance (Cardiology)</option>
+          <option>Dr. Emily Carter (Pediatrics)</option>
+          <option>Dr. Alan Turing (Internal Medicine)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Preferred Date & Time</label>
+        <input type="datetime-local" class="form-control">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Reason for Visit / Symptoms</label>
+        <textarea class="form-control" rows="2" placeholder="Describe symptoms or reasons for visit..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('bookApptModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmBooking()">Confirm Appointment</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="/static/js/patient_portal.js"></script>
+<script>
+  function confirmBooking() {
+    AegisCare.showToast("Appointment successfully requested!", "success");
+    closeModal("bookApptModal");
+  }
+  function payBillModal(inv, amt) {
+    AegisCare.showToast(`Settling Invoice ${inv} for $${amt}... Paid!`, "success");
+  }
+</script>
+{% endblock %}

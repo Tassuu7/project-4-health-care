@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Nurse Station & Triage - AegisCare{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-center">
+  <div>
+    <h1 style="font-size: 24px; font-weight: 700;">Nurse Triage & Ward Station</h1>
+    <p class="text-muted">Emergency acuity assessment, rapid vitals intake, and bed occupancy.</p>
+  </div>
+  <button class="btn btn-primary" onclick="openModal('triageModal')">+ New Triage Intake</button>
+</div>
+
+<!-- Active Emergency Queue -->
+<div class="card mb-6">
+  <div class="card-header">
+    <h2 class="card-title">Emergency Department Acuity Queue (ESI Prioritized)</h2>
+    <span class="badge badge-danger">Live Emergency</span>
+  </div>
+  <div class="table-container">
+    <table class="table" id="triageQueueTable">
+      <thead>
+        <tr>
+          <th>Acuity</th>
+          <th>Triage #</th>
+          <th>Patient</th>
+          <th>Chief Complaint</th>
+          <th>Assigned Zone</th>
+          <th>Pain</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="6" class="text-center text-muted">Loading emergency queue...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Inpatient Bed Matrix -->
+<div class="card mb-6">
+  <div class="card-header">
+    <h2 class="card-title">Inpatient Ward Bed Availability Matrix</h2>
+    <span class="badge badge-success">Hospital Capacity</span>
+  </div>
+  <div class="card-body">
+    <div id="bedMatrixContainer" class="bed-matrix-grid">
+      <!-- Bed cards populated by nurse_portal.js -->
+    </div>
+  </div>
+</div>
+
+<!-- Triage Intake Modal -->
+<div class="modal-overlay" id="triageModal">
+  <div class="modal-content" style="max-width: 650px;">
+    <div class="modal-header">
+      <h3 class="card-title">Emergency Severity Index (ESI) Triage Intake</h3>
+      <button class="btn btn-sm btn-secondary" onclick="closeModal('triageModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Patient</label>
+        <select class="form-select" id="triagePatientSelect">
+          <option value="1">John Doe (MRN-2026-0001)</option>
+          <option value="2">Jane Smith (MRN-2026-0002)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Chief Complaint</label>
+        <input type="text" class="form-control" id="triageComplaint" placeholder="e.g. Acute severe dyspnea, diaphoresis" oninput="TriageCalculator.evaluate()">
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label class="form-label">Pain Score (0-10)</label>
+          <input type="number" class="form-control" id="triagePain" min="0" max="10" value="4" oninput="TriageCalculator.evaluate()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Resource Estimation</label>
+          <select class="form-select" id="triageResources" onchange="TriageCalculator.evaluate()">
+            <option value="0">0 Resources (Fast Track)</option>
+            <option value="1" selected>1 Resource (Labs or X-Ray)</option>
+            <option value="2">2+ Resources (Complex Workup)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+        <div class="form-group">
+          <label class="form-label">Heart Rate (BPM)</label>
+          <input type="number" class="form-control" id="triageHR" value="84" oninput="TriageCalculator.evaluate()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Systolic BP</label>
+          <input type="number" class="form-control" id="triageBP" value="125" oninput="TriageCalculator.evaluate()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">SpO2 (%)</label>
+          <input type="number" class="form-control" id="triageSpO2" value="98" oninput="TriageCalculator.evaluate()">
+        </div>
+      </div>
+
+      <div style="margin: 12px 0;">
+        <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+          <input type="checkbox" id="triageResus" onchange="TriageCalculator.evaluate()">
+          <span style="font-weight:600; color:var(--health-red);">Requires Immediate Life-Saving Resuscitation (ESI Level 1)</span>
+        </label>
+        <label style="display:flex; align-items:center; gap:8px; cursor:pointer; margin-top:6px;">
+          <input type="checkbox" id="triageHighRisk" onchange="TriageCalculator.evaluate()">
+          <span style="font-weight:600; color:var(--health-orange);">High-Risk Situation / Severe Confusion / Acute Lethargy (ESI Level 2)</span>
+        </label>
+      </div>
+
+      <div id="triageResultBox" class="triage-score-display esi-4">
+        <h3>Level 4 - Less Urgent</h3>
+        <p>Calculated ESI Score: <strong>Level 4</strong></p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('triageModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="submitTriageAssessment()">Submit Emergency Triage</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="/static/js/triage_calc.js"></script>
+<script src="/static/js/nurse_portal.js"></script>
+<script>
+  function submitTriageAssessment() {
+    AegisCare.showToast("Emergency Triage registered in queue!", "success");
+    closeModal("triageModal");
+  }
+</script>
+{% endblock %}

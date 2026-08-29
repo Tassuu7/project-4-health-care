@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Diagnostic Laboratory - AegisCare{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-center">
+  <div>
+    <h1 style="font-size: 24px; font-weight: 700;">Diagnostic Laboratory Workbench</h1>
+    <p class="text-muted">Sample intake, specimen barcoding, and clinical test result entry.</p>
+  </div>
+  <button class="btn btn-primary" onclick="AegisCare.showToast('Specimen barcode scan active', 'info')">&#128247; Scan Barcode</button>
+</div>
+
+<div class="card mb-6">
+  <div class="card-header">
+    <h2 class="card-title">Pending Diagnostic Order Queue</h2>
+    <span class="badge badge-warning">Awaiting Results</span>
+  </div>
+  <div class="table-container">
+    <table class="table" id="labQueueTable">
+      <thead>
+        <tr>
+          <th>Order #</th>
+          <th>Patient</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="5" class="text-center text-muted">Loading pending lab orders...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="/static/js/lab_portal.js"></script>
+<script>
+  function openResultEntryModal(orderId) {
+    AegisCare.showToast(`Entering results for Lab Order #${orderId}... Verified & Flagged Normal.`, "success");
+  }
+</script>
+{% endblock %}
