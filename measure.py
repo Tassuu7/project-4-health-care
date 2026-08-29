@@ -219,7 +219,7 @@ def verify_trainplex():
         ("9. Test Coverage Included", metrics["test_files"] > 0, f"{metrics['test_files']} test suites configured"),
         ("10. Complete Working Application", os.path.exists(PROJECT_ROOT / "app" / "main.py"), "FastAPI backend & responsive UI"),
         ("11. README Documentation", os.path.exists(PROJECT_ROOT / "README.md"), "Comprehensive technical manual"),
-        ("12. No Sensitive Data", os.path.exists(PROJECT_ROOT / ".env.example"), "Zero secret leaks, .env excluded"),
+        ("12. No Sensitive Data", not os.path.exists(PROJECT_ROOT / ".env") and not os.path.exists(PROJECT_ROOT / ".env.example"), "Zero secrets, no committed .env files"),
         ("13. Authentic Architecture", os.path.exists(PROJECT_ROOT / "app" / "models"), "4-tier layered enterprise design"),
         ("14. Supported Language", "Python" in metrics["by_language"], "Python, JS, CSS, HTML5")
     ]
