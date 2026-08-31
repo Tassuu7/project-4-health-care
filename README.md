@@ -63,9 +63,9 @@ make run         # Linux / macOS Makefile
 ```
 
 ### Access URLs
-- **Web Interface**: [http://localhost:8000](http://localhost:8000)
-- **Interactive Swagger Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
-- **ReDoc Documentation**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
+- **Web Interface**: [http://localhost:8080](http://localhost:8080)
+- **Clinical Dashboard**: [http://localhost:8080/doctor-dashboard](http://localhost:8080/doctor-dashboard)
+- **Patient Portal**: [http://localhost:8080/patient-portal](http://localhost:8080/patient-portal)
 
 ---
 

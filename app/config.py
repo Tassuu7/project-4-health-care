@@ -18,8 +18,8 @@ class Settings(BaseSettings):
     APP_ENV: str = Field(default="development")
     APP_DEBUG: bool = Field(default=True)
     APP_HOST: str = Field(default="0.0.0.0")
-    APP_PORT: int = Field(default=8000)
-    APP_URL: str = Field(default="http://localhost:8000")
+    APP_PORT: int = Field(default=8080)
+    APP_URL: str = Field(default="http://localhost:8080")
     API_V1_PREFIX: str = Field(default="/api/v1")
     
     # Security and Secret Keys

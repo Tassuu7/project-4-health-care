@@ -33,7 +33,6 @@ def main():
     
     print(f"[*] Starting Application Server on http://{settings.APP_HOST}:{settings.APP_PORT}")
     print(f"[*] Access Clinical Portal: http://localhost:{settings.APP_PORT}")
-    print(f"[*] API Documentation:    http://localhost:{settings.APP_PORT}/docs")
     print(f"[*] Default Physician:    dr.smith / Doctor@123")
     print(f"[*] Default Nurse:        nurse.clara / Nurse@123")
     print(f"[*] Default Admin:        admin / Admin@123")

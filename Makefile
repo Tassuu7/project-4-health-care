@@ -30,4 +30,4 @@ docker-build:
 	docker build -t aegiscare-enterprise:latest .
 
 docker-run:
-	docker run -p 8000:8000 aegiscare-enterprise:latest
+	docker run -p 8080:8080 aegiscare-enterprise:latest

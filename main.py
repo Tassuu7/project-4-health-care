@@ -31,7 +31,6 @@ def start_server():
     
     print(f"[*] Application Server listening on http://{settings.APP_HOST}:{settings.APP_PORT}")
     print(f"[*] Web Interface:        http://localhost:{settings.APP_PORT}")
-    print(f"[*] API Documentation:    http://localhost:{settings.APP_PORT}/docs")
     print("=" * 76)
 
     uvicorn.run(
