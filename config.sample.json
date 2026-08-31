@@ -4,7 +4,7 @@
   "debug": true,
   "server": {
     "host": "0.0.0.0",
-    "port": 8080
+    "port": 8888
   },
   "database": {
     "url": "sqlite:///./aegiscare_health.db"
