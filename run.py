@@ -39,11 +39,21 @@ def main():
     print(f"[*] Default Patient:      patient.john / Patient@123")
     print("=" * 72)
 
+    import threading
+    import webbrowser
+
+    def open_browser():
+        import time
+        time.sleep(1.2)
+        webbrowser.open_new(f"http://localhost:{settings.APP_PORT}")
+
+    threading.Thread(target=open_browser, daemon=True).start()
+
     uvicorn.run(
         "app.main:app",
         host=settings.APP_HOST,
         port=settings.APP_PORT,
-        reload=settings.APP_DEBUG,
+        reload=False,
         log_level="info"
     )
 

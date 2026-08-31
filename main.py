@@ -33,6 +33,16 @@ def start_server():
     print(f"[*] Web Interface:        http://localhost:{settings.APP_PORT}")
     print("=" * 76)
 
+    import threading
+    import webbrowser
+
+    def open_browser():
+        import time
+        time.sleep(1.2)
+        webbrowser.open_new(f"http://localhost:{settings.APP_PORT}")
+
+    threading.Thread(target=open_browser, daemon=True).start()
+
     uvicorn.run(
         "app.main:app",
         host=settings.APP_HOST,
